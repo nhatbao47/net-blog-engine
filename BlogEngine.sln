@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogEngine.Api", "BlogEngin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogEngine.Web", "BlogEngine.Web\BlogEngine.Web.csproj", "{F409983C-7938-47DB-94C5-B010F0301770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlogEngine.Data", "BlogEngine.Data\BlogEngine.Data.csproj", "{042AF258-078C-40E3-82C0-4EF6FC4F0CF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlogEngine.Data", "BlogEngine.Data\BlogEngine.Data.csproj", "{042AF258-078C-40E3-82C0-4EF6FC4F0CF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
