@@ -1,6 +1,8 @@
-﻿namespace BlogEngine.Data.Abstract
+﻿using BlogEngine.Model;
+
+namespace BlogEngine.Data.Abstract
 {
-    public interface IPostRepository
+    public interface IPostRepository: IEntityBaseRepository<Post>
     {
         bool HasPost();
     }

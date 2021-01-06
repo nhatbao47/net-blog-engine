@@ -24,3 +24,4 @@ namespace BlogEngine.Data.Abstract
         void Commit();
     }
 }
+ 

@@ -1,10 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BlogEngine.Data;
+using BlogEngine.Data.Abstract;
+using BlogEngine.Data.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -24,6 +23,11 @@ namespace BlogEngine.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddDbContext<BlogEngineContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("BlogEngineContext"),
+                    b => b.MigrationsAssembly("BlogEngine.Data")));
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -67,6 +67,7 @@ namespace BlogEngine.Api
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IPostRepository, PostRepository>();
 
             services.AddSingleton<IAuthService>(
                 new AuthService(Configuration.GetValue<string>("JWTSecretKey"), 

@@ -47,6 +47,10 @@ namespace BlogEngine.Data
             builder.Property(p => p.CategoryId)
                 .IsRequired();
 
+            builder.Property(p => p.Title)
+                .HasMaxLength(255)
+                .IsRequired();
+
             builder.Property(p => p.Slug)
                 .HasMaxLength(255)
                 .IsRequired();
