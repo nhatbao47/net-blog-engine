@@ -25,8 +25,7 @@ namespace BlogEngine.Web.Pages
                 Id = s.Id,
                 Title = s.Title,
                 ShortDescription = s.ShortDescription,
-                PostDate = s.CreatedDate.ToString("dd MMM | yyyy"),
-                PostDateUTC = s.CreatedDate.ToString("yyyy-MM-ddTHH:mm:ss.FFFZ"),
+                PostDate = s.CreatedDate,
                 CategoryName = s.Category.Name,
                 ThumbnailImage = s.ThumbnailImage
             }).ToList();

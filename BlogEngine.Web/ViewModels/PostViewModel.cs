@@ -9,8 +9,9 @@ namespace BlogEngine.Web.ViewModels
         public string ShortDescription { get; set; }
         public string Content { get; set; }
         public string ThumbnailImage { get; set; }
-        public string PostDate { get; set; }
-        public string PostDateUTC { get; set; }
+        public DateTime PostDate { get; set; }
         public string CategoryName { get; set; }
+        public int ViewCount { get; set; }
+        public int CommentCount { get; set; }
     }
 }

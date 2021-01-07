@@ -17,7 +17,7 @@
                             <div class="post-thumbnail"><a href="post.html"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a></div>
                             <div class="post-details">
                                 <div class="post-meta d-flex justify-content-between">
-                                    <div class="date meta-last">@post.PostDate</div>
+                                    <div class="date meta-last">@post.PostDate.ToString("dd MMM | yyyy")</div>
                                     <div class="category"><a href="#">@post.CategoryName</a></div>
                                 </div><a href="post.html">
                                     <h3 class="h4">@post.Title</h3>
@@ -28,8 +28,8 @@
                                         <div class="avatar"><img src="img/avatar-3.jpg" alt="..." class="img-fluid"></div>
                                         <div class="title"><span>John Doe</span></div>
                                     </a>
-                                    <div class="date"><i class="icon-clock"></i> <span class="timeago" title="@post.PostDateUTC"></span></div>
-                                    <div class="comments meta-last"><i class="icon-comment"></i>12</div>
+                                    <div class="date"><i class="icon-clock"></i> <span class="timeago" title="@post.PostDate.ToString("yyyy-MM-ddTHH:mm:ss.FFFZ")"></span></div>
+                                    <div class="comments meta-last"><i class="icon-comment"></i>@post.CommentCount</div>
                                 </footer>
                             </div>
                         </div>
@@ -59,8 +59,10 @@
         </aside>
     </div>
 </div>
-<script type="text/javascript">
-    jQuery(document).ready(function () {
-        jQuery('.timeago').timeago();
-    });
-</script>
+@section Scripts {
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('.timeago').timeago();
+        });
+    </script>
+}

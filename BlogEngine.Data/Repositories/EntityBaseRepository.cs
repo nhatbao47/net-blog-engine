@@ -107,5 +107,13 @@ namespace BlogEngine.Data.Repositories
             EntityEntry dbEntityEntry = _context.Entry(entity);
             dbEntityEntry.State = EntityState.Modified;
         }
+
+        public IEnumerable<T> Entity
+        {
+            get
+            {
+                return _context.Set<T>();
+            }
+        }
     }
 }
