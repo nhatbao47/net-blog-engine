@@ -27,7 +27,7 @@ namespace BlogEngine.Data.Repositories
             _context.Set<T>().Add(entity);
         }
 
-        public IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
+        public IQueryable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties)
         {
             IQueryable<T> query = _context.Set<T>();
 
@@ -36,7 +36,7 @@ namespace BlogEngine.Data.Repositories
                 query = query.Include(includeProperty);
             }
 
-            return query.AsEnumerable();
+            return query;
         }
 
         public void Commit()
@@ -70,9 +70,9 @@ namespace BlogEngine.Data.Repositories
             return _context.Set<T>().Where(predicate);
         }
 
-        public IEnumerable<T> GetAll()
+        public IQueryable<T> GetAll()
         {
-            return _context.Set<T>().AsEnumerable();
+            return _context.Set<T>();
         }
 
         public Task<List<T>> GetAllAsync()

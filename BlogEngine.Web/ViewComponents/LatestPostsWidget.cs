@@ -1,4 +1,5 @@
-﻿using BlogEngine.Data.Abstract;
+﻿using AutoMapper;
+using BlogEngine.Data.Abstract;
 using BlogEngine.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
@@ -8,30 +9,21 @@ namespace BlogEngine.Web.ViewComponents
     public class LatestPostsWidget: ViewComponent
     {
         private readonly IPostRepository _repo;
+        private readonly IMapper _mapper;
 
-        public LatestPostsWidget(IPostRepository postRepository)
+        public LatestPostsWidget(IPostRepository postRepository, IMapper mapper)
         {
             _repo = postRepository;
+            _mapper = mapper;
         }
 
         public IViewComponentResult Invoke(bool compactView = true)
         {
-            var recentPosts = _repo.AllIncluding(i => i.Category).OrderByDescending(o => o.UpdatedDate).Select(s => 
-                new PostViewModel 
-                {
-                    Id = s.Id,
-                    Title = s.Title,
-                    ShortDescription = s.ShortDescription,
-                    PostDate = s.CreatedDate,
-                    CategoryName = s.Category.Name,
-                    ThumbnailImage = s.ThumbnailImage,
-                    ViewCount = 10,
-                    CommentCount = 0
-                }).Take(3).ToList();
+            var recentPosts = _repo.AllIncluding(i => i.Category).OrderByDescending(o => o.UpdatedDate).Take(3);
             var model = new LatestPostsViewModel()
             {
                 CompactView = compactView,
-                Posts = recentPosts
+                Posts = _mapper.ProjectTo<PostViewModel>(recentPosts).ToList()
             };
 
             return View(model);

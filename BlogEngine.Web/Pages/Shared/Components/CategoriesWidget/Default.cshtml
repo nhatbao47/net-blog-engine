@@ -5,6 +5,6 @@
     </header>
     @foreach (var item in Model)
     {
-        <div class="item d-flex justify-content-between"><a href="#">@item.Name</a><span>@item.PostCount</span></div>
+        <div class="item d-flex justify-content-between"><a asp-page="/Category" asp-route-Id="@item.Id">@item.Name</a><span>@item.PostCount</span></div>
     }
 </div>

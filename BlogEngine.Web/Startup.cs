@@ -1,6 +1,8 @@
+using AutoMapper;
 using BlogEngine.Data;
 using BlogEngine.Data.Abstract;
 using BlogEngine.Data.Repositories;
+using BlogEngine.Web.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -28,6 +30,7 @@ namespace BlogEngine.Web
                     b => b.MigrationsAssembly("BlogEngine.Data")));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddAutoMapper(typeof(MappingProfile));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

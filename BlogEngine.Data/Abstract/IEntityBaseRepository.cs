@@ -9,8 +9,8 @@ namespace BlogEngine.Data.Abstract
 {
     public interface IEntityBaseRepository<T> where T: class, IEntityBase, new()
     {
-        IEnumerable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
-        IEnumerable<T> GetAll();
+        IQueryable<T> AllIncluding(params Expression<Func<T, object>>[] includeProperties);
+        IQueryable<T> GetAll();
         Task<List<T>> GetAllAsync();
         int Count();
         T GetSingle(int id);
