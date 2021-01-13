@@ -30,6 +30,7 @@ namespace BlogEngine.Web
                     b => b.MigrationsAssembly("BlogEngine.Data")));
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
+            services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddAutoMapper(typeof(MappingProfile));
         }
 

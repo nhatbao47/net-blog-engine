@@ -15,8 +15,16 @@ namespace BlogEngine.Web.Mapping
                 .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.UpdatedDate))
                 .ForMember(dest => dest.ThumbnailImage, opt => opt.MapFrom(src => src.ThumbnailImage))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : ""))
-                .ForMember(dest => dest.ViewCount, opt => opt.MapFrom(src => 10))
-                .ForMember(dest => dest.CommentCount, opt => opt.MapFrom(src => 1))
+                .ForMember(dest => dest.ViewCount, opt => opt.MapFrom(src => src.ViewCount))
+                .ForMember(dest => dest.CommentCount, opt => opt.MapFrom(src => src.Comments != null ? src.Comments.Count : 0))
+                ;
+
+            CreateMap<Comment, CommentViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.EmailAddress, opt => opt.MapFrom(src => src.EmailAddress))
+                .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
+                .ForMember(dest => dest.CommentDate, opt => opt.MapFrom(src => src.CommentDate))
                 ;
         }
     }

@@ -21,6 +21,7 @@ namespace BlogEngine.Data
             ConfigureModelBuilderForCategory(modelBuilder);
             ConfigModelBuilderForPost(modelBuilder);
             ConfigModelBuilderForUsers(modelBuilder);
+            ConfigModelBuilderForComments(modelBuilder);
         }
 
         void ConfigureModelBuilderForCategory(ModelBuilder modelBuilder)
@@ -81,6 +82,30 @@ namespace BlogEngine.Data
 
             builder.Property(p => p.Email)
                 .HasMaxLength(60)
+                .IsRequired();
+        }
+
+        void ConfigModelBuilderForComments(ModelBuilder modelBuilder)
+        {
+            var builder = modelBuilder.Entity<Comment>();
+            builder.ToTable("Comment");
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Name)
+                .HasMaxLength(200)
+                .IsRequired();
+
+            builder.Property(p => p.EmailAddress)
+                .HasMaxLength(254);
+
+            builder.Property(p => p.Content)
+                .HasMaxLength(2000)
+                .IsRequired();
+
+            builder.Property(p => p.CommentDate)
+                .IsRequired();
+
+            builder.Property(p => p.PostId)
                 .IsRequired();
         }
     }

@@ -7,9 +7,19 @@ namespace BlogEngine.Data.Repositories
     {
         public PostRepository(BlogEngineContext context) : base(context) { }
 
-        public bool HasPost()
+        public bool IncreaseViewCount(int id)
         {
-            return this.Count() > 0;
+            var post = GetSingle(id);
+
+            if (post != null)
+            {
+                post.ViewCount++;
+                Update(post);
+                Commit();
+                return true;
+            }
+
+            return false;
         }
     }
 }

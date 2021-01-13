@@ -16,7 +16,7 @@ namespace BlogEngine.Data.Abstract
         T GetSingle(int id);
         T GetSingle(Expression<Func<T, bool>> predicate);
         T GetSingle(Expression<Func<T, bool>> predicate, params Expression<Func<T, object>>[] includeProperties);
-        IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate);
+        IQueryable<T> FindBy(Expression<Func<T, bool>> predicate);
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);

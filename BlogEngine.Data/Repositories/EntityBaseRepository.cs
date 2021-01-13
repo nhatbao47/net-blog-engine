@@ -65,7 +65,7 @@ namespace BlogEngine.Data.Repositories
             }
         }
 
-        public IEnumerable<T> FindBy(Expression<Func<T, bool>> predicate)
+        public IQueryable<T> FindBy(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().Where(predicate);
         }
