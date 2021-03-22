@@ -1,10 +1,13 @@
 using AutoMapper;
 using BlogEngine.Data.Abstract;
+using BlogEngine.Model;
 using BlogEngine.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlogEngine.Web.Pages
 {
@@ -25,22 +28,51 @@ namespace BlogEngine.Web.Pages
         public PostViewModel Post { get; private set; }
         public List<CommentViewModel> Comments { get; private set; }
 
-        public void OnGet()
+        [BindProperty]
+        public CommentViewModel NewComment { get; set; }
+
+        public IActionResult OnGet()
         {
-            _repo.IncreaseViewCount(Id);
+            LoadPostAndComments(Id);
+
+            if (Post == null)
+            {
+                return RedirectToPage("/NotFound");
+            }
+
+            return Page();
+        }
+
+        public IActionResult OnPost()
+        {
+            if (ModelState.IsValid)
+            {
+                var submitComment = new Comment()
+                {
+                    PostId = Id,
+                    Name = NewComment.Name,
+                    EmailAddress = NewComment.EmailAddress,
+                    Content = NewComment.Content,
+                    CommentDate = DateTime.Now
+                };
+                _commentRepo.Add(submitComment);
+                _commentRepo.Commit();
+            }
+
+            LoadPostAndComments(Id);
+            return Page();
+        }
+
+        private void LoadPostAndComments(int Id)
+        {
             var data = _repo.GetSingle(Id);
 
             if (data != null)
             {
-                var postComments = _commentRepo.FindBy(d => d.PostId == Id).OrderBy(o => o.CommentDate);
+                var postComments = _commentRepo.FindBy(d => d.PostId == Id).OrderByDescending(o => o.CommentDate);
                 Comments = _mapper.ProjectTo<CommentViewModel>(postComments).ToList();
                 Post = _mapper.Map<PostViewModel>(data);
                 Post.CommentCount = Comments.Count;
-            } 
-            else
-            {
-                Post = new PostViewModel();
-                Comments = new List<CommentViewModel>();
             }
         }
     }
