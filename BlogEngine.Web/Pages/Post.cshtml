@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "{slug}"
 @using BlogEngine.Web.ViewComponents
 @model BlogEngine.Web.Pages.PostModel
 @{
@@ -20,7 +20,7 @@
                         <h1>@post.Title<a href="#"><i class="fa fa-bookmark-o"></i></a></h1>
                         <div class="post-footer d-flex align-items-center flex-column flex-sm-row">
                             <a href="#" class="author d-flex align-items-center flex-wrap">
-                                <div class="avatar"><img src="img/avatar-1.jpg" alt="..." class="img-fluid"></div>
+                                <div class="avatar"><img src="/img/avatar-1.jpg" alt="..." class="img-fluid"></div>
                                 <div class="title"><span>John Doe</span></div>
                             </a>
                             <div class="d-flex align-items-center flex-wrap">
@@ -57,7 +57,7 @@
                                 {
                                     <div class="comment-header d-flex justify-content-between">
                                         <div class="user d-flex align-items-center">
-                                            <div class="image"><img src="img/user.svg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="image"><img src="/img/user.svg" alt="..." class="img-fluid rounded-circle"></div>
                                             <div class="title"><strong>@comment.Name</strong><span class="date">@comment.CommentDate.ToString("dd MMM yyyy")</span></div>
                                         </div>
                                     </div>
@@ -72,6 +72,7 @@
                                 <h3 class="h6">Leave a reply</h3>
                             </header>
                             <form method="post" class="commenting-form">
+                                <input type="hidden" asp-for="NewComment.PostId" value="@post.Id"/>
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <input type="text" placeholder="Name" class="form-control" asp-for="NewComment.Name">

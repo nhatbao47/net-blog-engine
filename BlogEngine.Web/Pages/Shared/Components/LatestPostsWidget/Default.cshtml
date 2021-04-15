@@ -9,7 +9,7 @@
         <div class="blog-posts">
             @foreach (var post in Model.Posts)
             {
-                <a asp-page="/Post" asp-route-Id="@post.Id">
+                <a asp-page="/Post" asp-route-Slug="@post.Slug">
                     <div class="item d-flex align-items-center">
                         <div class="image"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></div>
                         <div class="title">
@@ -38,14 +38,14 @@ else
                 {
                     <div class="post col-md-4">
                         <div class="post-thumbnail">
-                            <a asp-page="/Post" asp-route-Id="@post.Id"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a>
+                            <a asp-page="/Post" asp-route-Slug="@post.Slug"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a>
                         </div>
                         <div class="post-details">
                             <div class="post-meta d-flex justify-content-between">
                                 <div class="date">@post.PostDate.ToString("dd MMM | yyyy")</div>
                                 <div class="category"><a href="#">@post.CategoryName</a></div>
                             </div>
-                            <a asp-page="/Post" asp-route-Id="@post.Id">
+                            <a asp-page="/Post" asp-route-Slug="@post.Slug">
                                 <h3 class="h4">@post.Title</h3>
                             </a>
                             <p class="text-muted">@post.ShortDescription</p>

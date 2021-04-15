@@ -1,8 +1,8 @@
 ﻿@page
 @using BlogEngine.Web.ViewComponents
-@model BlogEngine.Web.Pages.BlogModel
+@model BlogEngine.Web.Pages.CategoryModel
 @{
-    ViewData["title"] = "All blogs";
+    ViewData["title"] = Model.CategoryName + " blogs";
 }
 
 <div class="container">
@@ -11,7 +11,7 @@
         <main class="posts-listing col-lg-8">
             <div class="container">
                 <div class="row">
-                    @foreach (var post in Model.Data)
+                    @foreach (var post in Model.Posts)
                     {
                         <div class="post col-xl-6">
                             <div class="post-thumbnail"><a asp-page="/Post" asp-route-Slug="@post.Slug"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a></div>
@@ -36,26 +36,28 @@
                         </div>
                     }
                 </div>
-                <!-- Pagination -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-template d-flex justify-content-center">
-                        <li class="page-item @(!Model.Data.HasPreviousPage ? "disabled" : "")">
-                            <a asp-page="/Blog" asp-route-CurrentPage="@(Model.CurrentPage - Model.PagingCount)" class="page-link"><i class="fa fa-angle-left"></i></a>
-                        </li>
-                        @for (int i = Model.CurrentPage - Model.PagingCount; i <= Model.CurrentPage + Model.PagingCount; i++)
-                        {
-                            if (i > 0 && i <= Model.Data.TotalPages)
+                @if (Model.Posts.Any())
+                {
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination pagination-template d-flex justify-content-center">
+                            <li class="page-item @(!Model.Posts.HasPreviousPage ? "disabled" : "")">
+                                <a asp-page="/Category" asp-route-Id="@Model.Id" asp-route-CurrentPage="@(Model.CurrentPage - Model.PagingCount)" class="page-link"><i class="fa fa-angle-left"></i></a>
+                            </li>
+                            @for (int i = Model.CurrentPage - Model.PagingCount; i <= Model.CurrentPage + Model.PagingCount; i++)
                             {
-                                <li class="page-item">
-                                    <a asp-page="/Blog" asp-route-CurrentPage="@i" class="page-link @(i == Model.CurrentPage ? "active" : "")">@i</a>
-                                </li>
+                                if (i > 0 && i <= Model.Posts.TotalPages)
+                                {
+                                    <li class="page-item">
+                                        <a asp-page="/Category" asp-route-Id="@Model.Id" asp-route-CurrentPage="@i" class="page-link @(i == Model.CurrentPage ? "active" : "")">@i</a>
+                                    </li>
+                                }
                             }
-                        }
-                        <li class="page-item @(!Model.Data.HasNextPage ? "disabled" : "")">
-                            <a asp-page="/Blog" asp-route-CurrentPage="@(Model.CurrentPage + Model.PagingCount)" class="page-link"><i class="fa fa-angle-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
+                            <li class="page-item @(!Model.Posts.HasNextPage ? "disabled" : "")">
+                                <a asp-page="/Category" asp-route-Id="@Model.Id" asp-route-CurrentPage="@(Model.CurrentPage + Model.PagingCount)" class="page-link"><i class="fa fa-angle-right"></i></a>
+                            </li>
+                        </ul>
+                    </nav>
+                }
             </div>
         </main>
         <aside class="col-lg-4">

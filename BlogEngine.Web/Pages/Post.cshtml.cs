@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlogEngine.Web.Pages
 {
@@ -24,7 +23,7 @@ namespace BlogEngine.Web.Pages
             _mapper = mapper;
         }
         [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
+        public string Slug { get; set; }
         public PostViewModel Post { get; private set; }
         public List<CommentViewModel> Comments { get; private set; }
 
@@ -33,7 +32,7 @@ namespace BlogEngine.Web.Pages
 
         public IActionResult OnGet()
         {
-            LoadPostAndComments(Id);
+            LoadPostAndComments(Slug);
 
             if (Post == null)
             {
@@ -49,7 +48,7 @@ namespace BlogEngine.Web.Pages
             {
                 var submitComment = new Comment()
                 {
-                    PostId = Id,
+                    PostId = NewComment.PostId,
                     Name = NewComment.Name,
                     EmailAddress = NewComment.EmailAddress,
                     Content = NewComment.Content,
@@ -57,19 +56,22 @@ namespace BlogEngine.Web.Pages
                 };
                 _commentRepo.Add(submitComment);
                 _commentRepo.Commit();
+
+                ModelState.Clear();
+                NewComment = new CommentViewModel();
             }
 
-            LoadPostAndComments(Id);
+            LoadPostAndComments(Slug);
             return Page();
         }
 
-        private void LoadPostAndComments(int Id)
+        private void LoadPostAndComments(string slug)
         {
-            var data = _repo.GetSingle(Id);
+            var data = _repo.GetSingle(slug);
 
             if (data != null)
             {
-                var postComments = _commentRepo.FindBy(d => d.PostId == Id).OrderByDescending(o => o.CommentDate);
+                var postComments = _commentRepo.FindBy(d => d.PostId == data.Id).OrderByDescending(o => o.CommentDate);
                 Comments = _mapper.ProjectTo<CommentViewModel>(postComments).ToList();
                 Post = _mapper.Map<PostViewModel>(data);
                 Post.CommentCount = Comments.Count;

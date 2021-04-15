@@ -10,6 +10,7 @@ namespace BlogEngine.Web.Mapping
         {
             CreateMap<Post, PostViewModel>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Slug, opt => opt.MapFrom(src => src.Slug))
                 .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Title))
                 .ForMember(dest => dest.ShortDescription, opt => opt.MapFrom(src => src.ShortDescription))
                 .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.UpdatedDate))

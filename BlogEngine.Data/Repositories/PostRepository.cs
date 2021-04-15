@@ -1,5 +1,6 @@
 ﻿using BlogEngine.Data.Abstract;
 using BlogEngine.Model;
+using System.Linq;
 
 namespace BlogEngine.Data.Repositories
 {
@@ -20,6 +21,11 @@ namespace BlogEngine.Data.Repositories
             }
 
             return false;
+        }
+
+        public Post GetSingle(string slug)
+        {
+            return Entity.Where(d => d.Slug == slug).FirstOrDefault();
         }
     }
 }

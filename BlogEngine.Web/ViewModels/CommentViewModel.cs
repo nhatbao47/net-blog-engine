@@ -13,6 +13,7 @@ namespace BlogEngine.Web.ViewModels
         [EmailAddress]
         public string EmailAddress { get; set; }
         [Display(Name = "Comment")]
+        [Required, StringLength(1000)]
         public string Content { get; set; }
         public DateTime CommentDate { get; set; }
         public int PostId { get; set; }
