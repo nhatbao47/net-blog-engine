@@ -44,22 +44,19 @@ namespace BlogEngine.Web.Pages
 
         public IActionResult OnPost()
         {
-            if (ModelState.IsValid)
+            var submitComment = new Comment()
             {
-                var submitComment = new Comment()
-                {
-                    PostId = NewComment.PostId,
-                    Name = NewComment.Name,
-                    EmailAddress = NewComment.EmailAddress,
-                    Content = NewComment.Content,
-                    CommentDate = DateTime.Now
-                };
-                _commentRepo.Add(submitComment);
-                _commentRepo.Commit();
+                PostId = NewComment.PostId,
+                Name = NewComment.Name,
+                EmailAddress = NewComment.EmailAddress,
+                Content = NewComment.Content,
+                CommentDate = DateTime.Now
+            };
+            _commentRepo.Add(submitComment);
+            _commentRepo.Commit();
 
-                ModelState.Clear();
-                NewComment = new CommentViewModel();
-            }
+            ModelState.Clear();
+            NewComment = new CommentViewModel();
 
             LoadPostAndComments(Slug);
             return Page();

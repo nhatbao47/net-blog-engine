@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using BlogEngine.Data.Abstract;
 using BlogEngine.Web.Mapping;
@@ -38,7 +35,7 @@ namespace BlogEngine.Web.Pages
             var category = _categoryRepo.GetSingle(Id);
             CategoryName = category?.Name;
 
-            var posts = _postRepo.AllIncluding(p => p.Category).Where(d => d.CategoryId == Id);
+            var posts = _postRepo.AllIncluding(p => p.Category).Where(d => d.CategoryId == Id).OrderByDescending(o => o.CreatedDate);
             Posts = _mapper.ProjectTo<PostViewModel>(posts).ToPaginatedList(CurrentPage, PageSize);
         }
     }

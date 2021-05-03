@@ -4,6 +4,7 @@ using BlogEngine.Web.Mapping;
 using BlogEngine.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Linq;
 
 namespace BlogEngine.Web.Pages
 {
@@ -26,7 +27,7 @@ namespace BlogEngine.Web.Pages
 
         public void OnGet()
         {
-            var posts = _repo.AllIncluding(p => p.Category);
+            var posts = _repo.AllIncluding(p => p.Category).OrderByDescending(o => o.CreatedDate);
             Data = _mapper.ProjectTo<PostViewModel>(posts).ToPaginatedList(CurrentPage, PageSize);
         }
     }

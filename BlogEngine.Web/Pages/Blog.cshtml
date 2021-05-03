@@ -18,9 +18,9 @@
                             <div class="post-details">
                                 <div class="post-meta d-flex justify-content-between">
                                     <div class="date meta-last">@post.PostDate.ToString("dd MMM | yyyy")</div>
-                                    <div class="category"><a href="#">@post.CategoryName</a></div>
+                                    <div class="category"><a asp-page="/Category" asp-route-Id="@post.CategoryId">@post.CategoryName</a></div>
                                 </div>
-                                <a asp-page="/Post" asp-route-Id="@post.Id">
+                                <a asp-page="/Post" asp-route-Slug="@post.Slug">
                                     <h3 class="h4">@post.Title</h3>
                                 </a>
                                 <p class="text-muted">@post.ShortDescription</p>

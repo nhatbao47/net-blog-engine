@@ -2,6 +2,7 @@ using AutoMapper;
 using BlogEngine.Data;
 using BlogEngine.Data.Abstract;
 using BlogEngine.Data.Repositories;
+using BlogEngine.Web.Infrastructure;
 using BlogEngine.Web.Mapping;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -24,7 +25,10 @@ namespace BlogEngine.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages(opt => 
+            {
+                opt.Conventions.ConfigureFilter(new ValidatorPageFilter());
+            });
             services.AddDbContext<BlogEngineContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("BlogEngineContext"),
                     b => b.MigrationsAssembly("BlogEngine.Data")));
@@ -32,6 +36,10 @@ namespace BlogEngine.Web
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
             services.AddAutoMapper(typeof(MappingProfile));
+
+#if DEBUG
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

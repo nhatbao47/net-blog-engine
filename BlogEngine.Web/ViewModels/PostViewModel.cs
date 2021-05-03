@@ -11,6 +11,7 @@ namespace BlogEngine.Web.ViewModels
         public string Content { get; set; }
         public string ThumbnailImage { get; set; }
         public DateTime PostDate { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int ViewCount { get; set; }
         public int CommentCount { get; set; }

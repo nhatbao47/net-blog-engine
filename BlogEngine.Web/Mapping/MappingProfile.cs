@@ -15,7 +15,8 @@ namespace BlogEngine.Web.Mapping
                 .ForMember(dest => dest.ShortDescription, opt => opt.MapFrom(src => src.ShortDescription))
                 .ForMember(dest => dest.PostDate, opt => opt.MapFrom(src => src.UpdatedDate))
                 .ForMember(dest => dest.ThumbnailImage, opt => opt.MapFrom(src => src.ThumbnailImage))
-                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : ""))
+                .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.CategoryId))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
                 .ForMember(dest => dest.ViewCount, opt => opt.MapFrom(src => src.ViewCount))
                 .ForMember(dest => dest.CommentCount, opt => opt.MapFrom(src => src.Comments != null ? src.Comments.Count : 0))
                 ;
