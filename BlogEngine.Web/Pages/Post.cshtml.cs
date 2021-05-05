@@ -14,18 +14,19 @@ namespace BlogEngine.Web.Pages
     {
         private readonly IPostRepository _repo;
         private readonly ICommentRepository _commentRepo;
+        private readonly IPostTagRepository _tagRepo;
         private readonly IMapper _mapper;
 
-        public PostModel(IPostRepository postRepository, ICommentRepository commentRepository, IMapper mapper)
+        public PostModel(IPostRepository postRepository, ICommentRepository commentRepository, IPostTagRepository postTagRepository, IMapper mapper)
         {
             _repo = postRepository;
             _commentRepo = commentRepository;
+            _tagRepo = postTagRepository;
             _mapper = mapper;
         }
         [BindProperty(SupportsGet = true)]
         public string Slug { get; set; }
         public PostViewModel Post { get; private set; }
-        public List<CommentViewModel> Comments { get; private set; }
 
         [BindProperty]
         public CommentViewModel NewComment { get; set; }
@@ -68,10 +69,12 @@ namespace BlogEngine.Web.Pages
 
             if (data != null)
             {
-                var postComments = _commentRepo.FindBy(d => d.PostId == data.Id).OrderByDescending(o => o.CommentDate);
-                Comments = _mapper.ProjectTo<CommentViewModel>(postComments).ToList();
+                var postId = data.Id;
+                var postComments = _commentRepo.GetCommentsByPostId(postId);
+                var tags = _tagRepo.GetTagsByPostId(postId);
                 Post = _mapper.Map<PostViewModel>(data);
-                Post.CommentCount = Comments.Count;
+                Post.Comments = _mapper.ProjectTo<CommentViewModel>(postComments).ToList();
+                Post.Tags = _mapper.ProjectTo<TagViewModel>(tags).ToList();
             }
         }
     }

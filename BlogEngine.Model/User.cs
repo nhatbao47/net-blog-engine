@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BlogEngine.Model
+﻿namespace BlogEngine.Model
 {
     public class User: IEntityBase
     {

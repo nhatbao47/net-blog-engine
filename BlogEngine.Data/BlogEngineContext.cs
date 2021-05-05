@@ -20,8 +20,10 @@ namespace BlogEngine.Data
             base.OnModelCreating(modelBuilder);
             ConfigureModelBuilderForCategory(modelBuilder);
             ConfigModelBuilderForPost(modelBuilder);
-            ConfigModelBuilderForUsers(modelBuilder);
-            ConfigModelBuilderForComments(modelBuilder);
+            ConfigModelBuilderForUser(modelBuilder);
+            ConfigModelBuilderForComment(modelBuilder);
+            ConfigModelBuilderForTag(modelBuilder);
+            ConfigModelBuilderForPostTag(modelBuilder);
         }
 
         void ConfigureModelBuilderForCategory(ModelBuilder modelBuilder)
@@ -70,7 +72,7 @@ namespace BlogEngine.Data
                 .IsRequired();
         }
 
-        void ConfigModelBuilderForUsers(ModelBuilder modelBuilder)
+        void ConfigModelBuilderForUser(ModelBuilder modelBuilder)
         {
             var builder = modelBuilder.Entity<User>();
             builder.ToTable("User");
@@ -85,7 +87,7 @@ namespace BlogEngine.Data
                 .IsRequired();
         }
 
-        void ConfigModelBuilderForComments(ModelBuilder modelBuilder)
+        void ConfigModelBuilderForComment(ModelBuilder modelBuilder)
         {
             var builder = modelBuilder.Entity<Comment>();
             builder.ToTable("Comment");
@@ -107,6 +109,26 @@ namespace BlogEngine.Data
 
             builder.Property(p => p.PostId)
                 .IsRequired();
+        }
+
+        void ConfigModelBuilderForTag(ModelBuilder modelBuilder)
+        {
+            var builder = modelBuilder.Entity<Tag>();
+            builder.ToTable("Tag");
+            builder.HasKey(p => p.Id);
+
+            builder.Property(p => p.Name)
+                .HasMaxLength(50)
+                .IsRequired();
+        }
+
+        void ConfigModelBuilderForPostTag(ModelBuilder modelBuilder)
+        {
+            var builder = modelBuilder.Entity<PostTag>();
+            builder.ToTable("PostTag");
+            builder.HasKey(p => p.Id);
+            builder.Property(p => p.PostId).IsRequired();
+            builder.Property(p => p.TagId).IsRequired();
         }
     }
 }

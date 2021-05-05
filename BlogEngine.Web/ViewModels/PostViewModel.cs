@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace BlogEngine.Web.ViewModels
 {
@@ -14,6 +15,8 @@ namespace BlogEngine.Web.ViewModels
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public int ViewCount { get; set; }
-        public int CommentCount { get; set; }
+        public int CommentCount => Comments != null ? Comments.Count : 0;
+        public List<CommentViewModel> Comments { get; set; }
+        public List<TagViewModel> Tags { get; set; }
     }
 }

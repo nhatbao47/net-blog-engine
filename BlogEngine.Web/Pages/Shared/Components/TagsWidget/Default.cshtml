@@ -1,4 +1,4 @@
-﻿@model List<string>
+﻿@model List<BlogEngine.Web.ViewModels.TagViewModel>
 
 <div class="widget tags">
     <header>
@@ -7,7 +7,7 @@
     <ul class="list-inline">
         @foreach (var tag in Model)
         {
-            <li class="list-inline-item"><a href="#" class="tag">#@tag</a></li>
+            <li class="list-inline-item"><a asp-page="/Tag" asp-route-Id="@tag.Id" class="tag">#@tag.Name.ToUpper()</a></li>
         }
     </ul>
 </div>

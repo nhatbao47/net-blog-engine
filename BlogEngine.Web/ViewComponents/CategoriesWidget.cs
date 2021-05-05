@@ -1,32 +1,27 @@
-﻿using BlogEngine.Data;
+﻿using AutoMapper;
 using BlogEngine.Data.Abstract;
 using BlogEngine.Web.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BlogEngine.Web.ViewComponents
 {
     public class CategoriesWidget: ViewComponent
     {
-        private readonly ICategoryRepository repository;
+        private readonly ICategoryRepository _repo;
+        private readonly IMapper _mapper;
 
-        public CategoriesWidget(ICategoryRepository categoryRepository)
+        public CategoriesWidget(ICategoryRepository categoryRepository, IMapper mapper)
         {
-            repository = categoryRepository;
+            _repo = categoryRepository;
+            _mapper = mapper;
         }
 
         public IViewComponentResult Invoke()
         {
-            var categories = repository.AllIncluding(i => i.Posts).Select(s => 
-                new CategoryViewModel 
-                {
-                    Id = s.Id,
-                    Name = s.Name,
-                    PostCount = s.Posts.Count
-                }).ToList();
-            return View(categories);
+            var categories = _repo.AllIncluding(i => i.Posts).OrderBy(o => o.Name);
+            var models = _mapper.ProjectTo<CategoryViewModel>(categories).ToList();
+            return View(models);
         }
     }
 }

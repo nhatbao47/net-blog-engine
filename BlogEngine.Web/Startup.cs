@@ -35,11 +35,9 @@ namespace BlogEngine.Web
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IPostRepository, PostRepository>();
             services.AddScoped<ICommentRepository, CommentRepository>();
+            services.AddScoped<IPostTagRepository, PostTagRepository>();
+            services.AddScoped<ITagRepository, TagRepository>();
             services.AddAutoMapper(typeof(MappingProfile));
-
-#if DEBUG
-            services.AddControllersWithViews().AddRazorRuntimeCompilation();
-#endif
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

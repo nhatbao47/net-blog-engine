@@ -32,13 +32,21 @@
                         <div class="post-body">
                             @post.Content
                         </div>
-                        <div class="post-tags"><a href="#" class="tag">#Business</a><a href="#" class="tag">#Tricks</a><a href="#" class="tag">#Financial</a><a href="#" class="tag">#Economy</a></div>
+                        @if (Model.Post.Tags.Any())
+                        {
+                            <div class="post-tags">
+                                @foreach (var tag in Model.Post.Tags)
+                                {
+                                    <a href="#" class="tag">#@tag.Name.ToUpper()</a>
+                                }
+                            </div>
+                        }
                         <div class="post-comments">
                             <header>
                                 <h3 class="h6">Post Comments<span class="no-of-comments">(@post.CommentCount)</span></h3>
                             </header>
                             <div class="comment">
-                                @foreach (var comment in Model.Comments)
+                                @foreach (var comment in Model.Post.Comments)
                                 {
                                     <div class="comment-header d-flex justify-content-between">
                                         <div class="user d-flex align-items-center">
@@ -57,7 +65,7 @@
                                 <h3 class="h6">Leave a reply</h3>
                             </header>
                             <form method="post" class="commenting-form">
-                                <input type="hidden" asp-for="NewComment.PostId" value="@post.Id"/>
+                                <input type="hidden" asp-for="NewComment.PostId" value="@post.Id" />
                                 <div class="row">
                                     <div class="form-group col-md-6">
                                         <input type="text" placeholder="Name" class="form-control" asp-for="NewComment.Name">

@@ -19,5 +19,6 @@ namespace BlogEngine.Model
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }
         public ICollection<Comment> Comments { get; set; }
+        public ICollection<PostTag> PostTags { get; set; }
     }
 }

@@ -28,6 +28,17 @@ namespace BlogEngine.Web.Mapping
                 .ForMember(dest => dest.Content, opt => opt.MapFrom(src => src.Content))
                 .ForMember(dest => dest.CommentDate, opt => opt.MapFrom(src => src.CommentDate))
                 ;
+
+            CreateMap<Category, CategoryViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.PostCount, opt => opt.MapFrom(src => src.Posts != null ? src.Posts.Count : 0))
+                ;
+
+            CreateMap<Tag, TagViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+                ;
         }
     }
 }
