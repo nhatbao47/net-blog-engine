@@ -1,4 +1,3 @@
-using System.Linq;
 using AutoMapper;
 using BlogEngine.Data.Abstract;
 using BlogEngine.Web.Mapping;
@@ -22,7 +21,7 @@ namespace BlogEngine.Web.Pages
         }
 
         [BindProperty(SupportsGet = true)]
-        public int Id { get; set; }
+        public string Slug { get; set; }
         [BindProperty(SupportsGet = true)]
         public int CurrentPage { get; set; } = 1;
         public int PageSize { get; private set; } = 4;
@@ -32,11 +31,13 @@ namespace BlogEngine.Web.Pages
 
         public void OnGet()
         {
-            var category = _categoryRepo.GetSingle(Id);
-            CategoryName = category?.Name;
-
-            var posts = _postRepo.AllIncluding(p => p.Category).Where(d => d.CategoryId == Id).OrderByDescending(o => o.CreatedDate);
-            Posts = _mapper.ProjectTo<PostViewModel>(posts).ToPaginatedList(CurrentPage, PageSize);
+            var category = _categoryRepo.GetSingle(Slug);
+            if (category != null)
+            {
+                CategoryName = category.Name;
+                var posts = _postRepo.GetPostsByCategoryId(category.Id);
+                Posts = _mapper.ProjectTo<PostViewModel>(posts).ToPaginatedList(CurrentPage, PageSize);
+            }
         }
     }
 }

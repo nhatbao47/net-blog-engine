@@ -1,4 +1,5 @@
 ﻿using BlogEngine.Model;
+using System.Linq;
 
 namespace BlogEngine.Data.Abstract
 {
@@ -6,5 +7,6 @@ namespace BlogEngine.Data.Abstract
     {
         bool IncreaseViewCount(int id);
         Post GetSingle(string slug);
+        IQueryable<Post> GetPostsByCategoryId(int categoryId);
     }
 }

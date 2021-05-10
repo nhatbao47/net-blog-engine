@@ -9,6 +9,11 @@ namespace BlogEngine.Web
         public int PageIndex { get; }
         public int TotalPages { get; }
 
+        public PaginatedList()
+        {
+
+        }
+
         public PaginatedList(List<T> items, int count, int pageIndex, int pageSize)
         {
             PageIndex = pageIndex;

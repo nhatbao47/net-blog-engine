@@ -39,6 +39,9 @@ namespace BlogEngine.Data
             builder.Property(p => p.Description)
                 .HasMaxLength(255)
                 .IsRequired();
+
+            builder.Property(p => p.Slug)
+                .HasMaxLength(255);
         }
 
         void ConfigModelBuilderForPost(ModelBuilder modelBuilder)
@@ -120,6 +123,9 @@ namespace BlogEngine.Data
             builder.Property(p => p.Name)
                 .HasMaxLength(50)
                 .IsRequired();
+
+            builder.Property(p => p.Slug)
+                .HasMaxLength(255);
         }
 
         void ConfigModelBuilderForPostTag(ModelBuilder modelBuilder)

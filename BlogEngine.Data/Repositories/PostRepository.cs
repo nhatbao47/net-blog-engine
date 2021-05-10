@@ -27,5 +27,8 @@ namespace BlogEngine.Data.Repositories
         {
             return Entity.Where(d => d.Slug == slug).FirstOrDefault();
         }
+
+        public IQueryable<Post> GetPostsByCategoryId(int categoryId) 
+            => this.AllIncluding(p => p.Category).Where(d => d.CategoryId == categoryId).OrderByDescending(o => o.CreatedDate);
     }
 }

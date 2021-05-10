@@ -1,5 +1,6 @@
 ﻿using BlogEngine.Data.Abstract;
 using BlogEngine.Model;
+using System.Linq;
 
 namespace BlogEngine.Data.Repositories
 {
@@ -7,9 +8,6 @@ namespace BlogEngine.Data.Repositories
     {
         public CategoryRepository(BlogEngineContext context) : base(context) { }
 
-        public bool HasCategory()
-        {
-            return this.Count() > 0;
-        }
+        public Category GetSingle(string slug) => this.Entity.FirstOrDefault(d => d.Slug == slug.Trim());
     }
 }

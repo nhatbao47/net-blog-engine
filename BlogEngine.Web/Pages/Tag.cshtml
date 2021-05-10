@@ -1,4 +1,16 @@
-﻿@page
+﻿@page "{slug}"
+@using BlogEngine.Web.ViewModels
 @model BlogEngine.Web.Pages.TagModel
 @{
+    ViewData["title"] = Model.TagName;
+    var model = new PostListViewModel
+    {
+        Slug = Model.Slug,
+        Posts = Model.Posts,
+        CurrentPage = Model.CurrentPage,
+        PagingCount = Model.PagingCount,
+        PageName = "Tag"
+    };
 }
+
+<partial name="_PostList" model="model" />

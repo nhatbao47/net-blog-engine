@@ -1,77 +1,16 @@
 ﻿@page
-@using BlogEngine.Web.ViewComponents
+@using BlogEngine.Web.ViewModels
 @model BlogEngine.Web.Pages.BlogModel
 @{
     ViewData["title"] = "All blogs";
+    var model = new PostListViewModel
+    {
+        Slug = "",
+        Posts = Model.Data,
+        CurrentPage = Model.CurrentPage,
+        PagingCount = Model.PagingCount,
+        PageName = "Blog"
+    };
 }
 
-<div class="container">
-    <div class="row">
-        <!-- Latest Posts -->
-        <main class="posts-listing col-lg-8">
-            <div class="container">
-                <div class="row">
-                    @foreach (var post in Model.Data)
-                    {
-                        <div class="post col-xl-6">
-                            <div class="post-thumbnail"><a asp-page="/Post" asp-route-Slug="@post.Slug"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a></div>
-                            <div class="post-details">
-                                <div class="post-meta d-flex justify-content-between">
-                                    <div class="date meta-last">@post.PostDate.ToString("dd MMM | yyyy")</div>
-                                    <div class="category"><a asp-page="/Category" asp-route-Id="@post.CategoryId">@post.CategoryName</a></div>
-                                </div>
-                                <a asp-page="/Post" asp-route-Slug="@post.Slug">
-                                    <h3 class="h4">@post.Title</h3>
-                                </a>
-                                <p class="text-muted">@post.ShortDescription</p>
-                                <footer class="post-footer d-flex align-items-center">
-                                    <a href="#" class="author d-flex align-items-center flex-wrap">
-                                        <div class="avatar"><img src="/img/avatar-3.jpg" alt="@post.Title" class="img-fluid"></div>
-                                        <div class="title"><span>John Doe</span></div>
-                                    </a>
-                                    <div class="date"><i class="icon-clock"></i> <span class="timeago" title="@post.PostDate.ToString("yyyy-MM-ddTHH:mm:ss.FFFZ")"></span></div>
-                                    <div class="comments meta-last"><i class="icon-comment"></i>@post.CommentCount</div>
-                                </footer>
-                            </div>
-                        </div>
-                    }
-                </div>
-                <!-- Pagination -->
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination pagination-template d-flex justify-content-center">
-                        <li class="page-item @(!Model.Data.HasPreviousPage ? "disabled" : "")">
-                            <a asp-page="/Blog" asp-route-CurrentPage="@(Model.CurrentPage - Model.PagingCount)" class="page-link"><i class="fa fa-angle-left"></i></a>
-                        </li>
-                        @for (int i = Model.CurrentPage - Model.PagingCount; i <= Model.CurrentPage + Model.PagingCount; i++)
-                        {
-                            if (i > 0 && i <= Model.Data.TotalPages)
-                            {
-                                <li class="page-item">
-                                    <a asp-page="/Blog" asp-route-CurrentPage="@i" class="page-link @(i == Model.CurrentPage ? "active" : "")">@i</a>
-                                </li>
-                            }
-                        }
-                        <li class="page-item @(!Model.Data.HasNextPage ? "disabled" : "")">
-                            <a asp-page="/Blog" asp-route-CurrentPage="@(Model.CurrentPage + Model.PagingCount)" class="page-link"><i class="fa fa-angle-right"></i></a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </main>
-        <aside class="col-lg-4">
-            <!-- Widget [Latest Posts Widget]-->
-            @await Component.InvokeAsync(nameof(LatestPostsWidget))
-            <!-- Widget [Categories Widget]-->
-            @await Component.InvokeAsync(nameof(CategoriesWidget))
-            <!-- Widget [Tags Cloud Widget]-->
-            @await Component.InvokeAsync(nameof(TagsWidget))
-        </aside>
-    </div>
-</div>
-@section Scripts {
-    <script type="text/javascript">
-        jQuery(document).ready(function () {
-            jQuery('.timeago').timeago();
-        });
-    </script>
-}
+<partial name="_PostList" model="model" />
