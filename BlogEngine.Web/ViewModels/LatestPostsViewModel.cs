@@ -4,7 +4,14 @@ namespace BlogEngine.Web.ViewModels
 {
     public class LatestPostsViewModel
     {
-        public bool CompactView { get; set; }
+        public ViewMode View { get; set; }
         public List<PostViewModel> Posts { get; set; }
+    }
+
+    public enum ViewMode
+    {
+        Full = 1,
+        Compact,
+        Tiny
     }
 }

@@ -1,0 +1,68 @@
+﻿@using BlogEngine.Web.ViewModels;
+@model List<PostViewModel>;
+@{ var index = 0;}
+
+<section class="featured-posts">
+    <div class="container">
+        @foreach (var post in Model)
+        {
+        <div class="row d-flex align-items-stretch">
+            @if (index % 2 == 0)
+            {
+                <div class="text col-lg-7">
+                    <div class="text-inner d-flex align-items-center">
+                        <div class="content">
+                            <header class="post-header">
+                                <div class="category">
+                                    <a href="#">@post.CategoryName</a>
+                                </div>
+                                <a asp-page="/Post" asp-route-Slug="@post.Slug">
+                                    <h2 class="h4">@post.Title</h2>
+                                </a>
+                            </header>
+                            <p>@post.ShortDescription</p>
+                            <footer class="post-footer d-flex align-items-center">
+                                <a href="#" class="author d-flex align-items-center flex-wrap">
+                                    <div class="avatar"><img src="/img/avatar-1.jpg" alt="@post.Title" class="img-fluid"></div>
+                                    <div class="title"><span>John Doe</span></div>
+                                </a>
+                                <div class="date"><i class="icon-clock"></i> <span class="timeago" title="@post.PostDate.ToString("yyyy-MM-ddTHH:mm:ss.FFFZ")"></span></div>
+                                <div class="comments"><i class="icon-comment"></i>@post.CommentCount</div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+                <div class="image col-lg-5"><img src="img/featured-pic-1.jpeg" alt="..."></div>
+            }
+            else
+            {
+                <div class="image col-lg-5"><img src="img/featured-pic-1.jpeg" alt="..."></div>
+                <div class="text col-lg-7">
+                    <div class="text-inner d-flex align-items-center">
+                        <div class="content">
+                            <header class="post-header">
+                                <div class="category">
+                                    <a href="#">@post.CategoryName</a>
+                                </div>
+                                <a asp-page="/Post" asp-route-Slug="@post.Slug">
+                                    <h2 class="h4">@post.Title</h2>
+                                </a>
+                            </header>
+                            <p>@post.ShortDescription</p>
+                            <footer class="post-footer d-flex align-items-center">
+                                <a href="#" class="author d-flex align-items-center flex-wrap">
+                                    <div class="avatar"><img src="/img/avatar-1.jpg" alt="@post.Title" class="img-fluid"></div>
+                                    <div class="title"><span>John Doe</span></div>
+                                </a>
+                                <div class="date"><i class="icon-clock"></i> <span class="timeago" title="@post.PostDate.ToString("yyyy-MM-ddTHH:mm:ss.FFFZ")"></span></div>
+                                <div class="comments"><i class="icon-comment"></i>@post.CommentCount</div>
+                            </footer>
+                        </div>
+                    </div>
+                </div>
+            }
+            @{index++;}
+        </div>
+        }
+    </div>
+</section>

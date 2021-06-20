@@ -59,7 +59,7 @@
         </main>
         <aside class="col-lg-4">
             <!-- Widget [Latest Posts Widget]-->
-            @await Component.InvokeAsync(nameof(LatestPostsWidget))
+            @await Component.InvokeAsync(nameof(LatestPostsWidget), ViewMode.Compact)
             <!-- Widget [Categories Widget]-->
             @await Component.InvokeAsync(nameof(CategoriesWidget))
             <!-- Widget [Tags Cloud Widget]-->

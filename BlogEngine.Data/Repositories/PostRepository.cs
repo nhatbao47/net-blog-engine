@@ -30,5 +30,8 @@ namespace BlogEngine.Data.Repositories
 
         public IQueryable<Post> GetPostsByCategoryId(int categoryId) 
             => this.AllIncluding(p => p.Category).Where(d => d.CategoryId == categoryId).OrderByDescending(o => o.CreatedDate);
+
+        public IQueryable<Post> GetTopFeaturedPosts() 
+            => this.GetAll().Where(d => d.IsFeature).OrderByDescending(o => o.CreatedDate).Take(3);
     }
 }

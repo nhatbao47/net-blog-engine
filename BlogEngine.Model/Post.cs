@@ -15,6 +15,7 @@ namespace BlogEngine.Model
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedDate { get; set; }
         public int ViewCount { get; set; }
+        public bool IsFeature { get; set; }
         public int CategoryId { get; set; }
         [ForeignKey("CategoryId")]
         public Category Category { get; set; }

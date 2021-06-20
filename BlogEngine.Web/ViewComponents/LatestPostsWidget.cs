@@ -17,12 +17,12 @@ namespace BlogEngine.Web.ViewComponents
             _mapper = mapper;
         }
 
-        public IViewComponentResult Invoke(bool compactView = true)
+        public IViewComponentResult Invoke(ViewMode view)
         {
             var recentPosts = _repo.AllIncluding(i => i.Category).OrderByDescending(o => o.UpdatedDate).Take(3);
             var model = new LatestPostsViewModel()
             {
-                CompactView = compactView,
+                View = view,
                 Posts = _mapper.ProjectTo<PostViewModel>(recentPosts).ToList()
             };
 

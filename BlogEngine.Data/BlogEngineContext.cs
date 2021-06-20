@@ -73,6 +73,9 @@ namespace BlogEngine.Data
 
             builder.Property(p => p.CreatedDate)
                 .IsRequired();
+
+            builder.Property(p => p.IsFeature)
+                .IsRequired();
         }
 
         void ConfigModelBuilderForUser(ModelBuilder modelBuilder)

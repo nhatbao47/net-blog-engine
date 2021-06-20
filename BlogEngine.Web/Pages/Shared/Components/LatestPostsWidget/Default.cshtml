@@ -1,58 +1,73 @@
-﻿@model BlogEngine.Web.ViewModels.LatestPostsViewModel
+﻿@using BlogEngine.Web.ViewModels;
+@model LatestPostsViewModel
 
-@if (Model.CompactView)
+@switch (Model.View)
 {
-    <div class="widget latest-posts">
-        <header>
-            <h3 class="h6">Latest Posts</h3>
-        </header>
-        <div class="blog-posts">
+    case ViewMode.Full:
+        <section class="latest-posts">
+            <div class="container">
+                <header>
+                    <h2>Latest from the blog</h2>
+                    <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                </header>
+                <div class="row">
+                    @foreach (var post in Model.Posts)
+                    {
+                        <div class="post col-md-4">
+                            <div class="post-thumbnail">
+                                <a asp-page="/Post" asp-route-Slug="@post.Slug"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a>
+                            </div>
+                            <div class="post-details">
+                                <div class="post-meta d-flex justify-content-between">
+                                    <div class="date">@post.PostDate.ToString("dd MMM | yyyy")</div>
+                                    <div class="category"><a href="#">@post.CategoryName</a></div>
+                                </div>
+                                <a asp-page="/Post" asp-route-Slug="@post.Slug">
+                                    <h3 class="h4">@post.Title</h3>
+                                </a>
+                                <p class="text-muted">@post.ShortDescription</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </section>
+        break;
+    case ViewMode.Compact:
+        <div class="widget latest-posts">
+            <header>
+                <h3 class="h6">Latest Posts</h3>
+            </header>
+            <div class="blog-posts">
+                @foreach (var post in Model.Posts)
+                {
+                    <a asp-page="/Post" asp-route-Slug="@post.Slug">
+                        <div class="item d-flex align-items-center">
+                            <div class="image"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></div>
+                            <div class="title">
+                                <strong>@post.Title</strong>
+                                <div class="d-flex align-items-center">
+                                    <div class="views"><i class="icon-eye"></i> @post.ViewCount</div>
+                                    <div class="comments"><i class="icon-comment"></i>@post.CommentCount</div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                }
+            </div>
+        </div>
+        break;
+    case ViewMode.Tiny:
+        <div class="latest-posts">
             @foreach (var post in Model.Posts)
             {
                 <a asp-page="/Post" asp-route-Slug="@post.Slug">
-                    <div class="item d-flex align-items-center">
+                    <div class="post d-flex align-items-center">
                         <div class="image"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></div>
-                        <div class="title">
-                            <strong>@post.Title</strong>
-                            <div class="d-flex align-items-center">
-                                <div class="views"><i class="icon-eye"></i> @post.ViewCount</div>
-                                <div class="comments"><i class="icon-comment"></i>@post.CommentCount</div>
-                            </div>
-                        </div>
+                        <div class="title"><strong>@post.Title</strong><span class="date last-meta">@post.PostDate.ToString("MMMM dd, yyyy")</span></div>
                     </div>
                 </a>
             }
         </div>
-    </div>
-}
-else
-{
-    <section class="latest-posts">
-        <div class="container">
-            <header>
-                <h2>Latest from the blog</h2>
-                <p class="text-big">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-            </header>
-            <div class="row">
-                @foreach (var post in Model.Posts)
-                {
-                    <div class="post col-md-4">
-                        <div class="post-thumbnail">
-                            <a asp-page="/Post" asp-route-Slug="@post.Slug"><img src="@post.ThumbnailImage" alt="@post.Title" class="img-fluid"></a>
-                        </div>
-                        <div class="post-details">
-                            <div class="post-meta d-flex justify-content-between">
-                                <div class="date">@post.PostDate.ToString("dd MMM | yyyy")</div>
-                                <div class="category"><a href="#">@post.CategoryName</a></div>
-                            </div>
-                            <a asp-page="/Post" asp-route-Slug="@post.Slug">
-                                <h3 class="h4">@post.Title</h3>
-                            </a>
-                            <p class="text-muted">@post.ShortDescription</p>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </section>
+        break;
 }
