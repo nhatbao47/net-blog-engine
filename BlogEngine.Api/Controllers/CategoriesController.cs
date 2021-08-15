@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BlogEngine.Model;
 using BlogEngine.Data.Abstract;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BlogEngine.Api.Controllers
 {
